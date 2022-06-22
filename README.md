@@ -21,3 +21,7 @@ npm run build
 ```
 
 Then copy the html file in `dist`
+
+## example
+
+![fmp file](./readme-image.png)
