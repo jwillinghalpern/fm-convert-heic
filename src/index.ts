@@ -3,11 +3,12 @@ import heic2any from 'heic2any';
 async function blobToDataUrl(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
+    reader.addEventListener('loadend', () => {
+      const dataUrl = reader.result;
+      if (typeof dataUrl === 'string') resolve(dataUrl);
+      reject('expected reader to return a string');
+    });
     reader.readAsDataURL(blob);
-    reader.onloadend = () => {
-      const base64 = reader.result as string;
-      resolve(base64);
-    };
   });
 }
 
