@@ -2,11 +2,11 @@
 
 convert a heic to a png in a FileMaker Web Viewer
 
-## usage
+## Usage
 
 check out the fmp12 file for example usage
 
-## development
+## Development
 
 ### To install
 
@@ -22,7 +22,7 @@ npm run build
 
 Then copy the html file in `dist`
 
-## example
+## Example
 
 ![fmp file](./readme-image.png)
 
