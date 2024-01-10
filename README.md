@@ -1,10 +1,10 @@
 # fm-convert-heic
 
-convert a heic to a png in a FileMaker Web Viewer
+convert a HEIC to a PNG or JPG in a FileMaker Web Viewer
 
 ## Usage
 
-check out the fmp12 file for example usage
+Check out the fmp12 file for example usage
 
 ## Development
 
