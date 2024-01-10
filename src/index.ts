@@ -38,11 +38,11 @@ async function heicToJpg(
 }
 
 interface ToJpgOptions {
-  toType?: 'image/jpeg';
+  toType: 'image/jpeg';
   quality?: number;
 }
 interface ToPngOptions {
-  toType?: 'image/png';
+  toType: 'image/png';
 }
 
 async function heicToSomething(
