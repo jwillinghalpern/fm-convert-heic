@@ -27,11 +27,33 @@ function base64ToDataUrl(base64: string, mimetype: string): string {
 }
 
 async function heicToPng(base64: string): Promise<string | undefined> {
+  return heicToSomething(base64, { toType: 'image/png' });
+}
+
+async function heicToJpg(
+  base64: string,
+  quality?: number
+): Promise<string | undefined> {
+  return heicToSomething(base64, { toType: 'image/jpeg', quality });
+}
+
+interface ToJpgOptions {
+  toType?: 'image/jpeg';
+  quality?: number;
+}
+interface ToPngOptions {
+  toType?: 'image/png';
+}
+
+async function heicToSomething(
+  base64: string,
+  options: ToJpgOptions | ToPngOptions
+): Promise<string | undefined> {
   try {
     const dataUrl = base64ToDataUrl(base64, 'image/heic');
     const blob = await dataUrlToBlob(dataUrl);
     // conversionResult is a BLOB of the PNG formatted image
-    const resultBlob = (await heic2any({ blob })) as Blob;
+    const resultBlob = (await heic2any({ ...options, blob })) as Blob;
     const resultDataUrl = await blobToDataUrl(resultBlob as Blob);
     return dataUrlToBase64(resultDataUrl);
   } catch (error) {
@@ -42,11 +64,19 @@ async function heicToPng(base64: string): Promise<string | undefined> {
 type ScriptOption = '0' | '1' | '2' | '3' | '4' | '5';
 declare global {
   interface Window {
-    convertHeicAndCallFM: (
+    convertHeicToPng: (
       heicAsBase64: string,
       fmScript: string,
       scriptOption?: ScriptOption
     ) => Promise<void>;
+
+    convertHeicToJpg: (
+      heicAsBase64: string,
+      fmScript: string,
+      scriptOption?: ScriptOption,
+      jpgQuality?: number
+    ) => Promise<void>;
+
     FileMaker: {
       PerformScriptWithOption: (
         script: string,
@@ -57,14 +87,28 @@ declare global {
   }
 }
 
-// Here's the main function called from FM
-window.convertHeicAndCallFM = async function (
+// Here are the main functions called from FM
+window.convertHeicToPng = async function (
   heicAsBase64: string,
   fmScript: string,
   scriptOption?: ScriptOption
 ): Promise<void> {
   try {
     const res = (await heicToPng(heicAsBase64)) as string;
+    window.FileMaker.PerformScriptWithOption(fmScript, res, scriptOption);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+window.convertHeicToJpg = async function (
+  heicAsBase64: string,
+  fmScript: string,
+  scriptOption?: ScriptOption,
+  jpgQuality?: number
+): Promise<void> {
+  try {
+    const res = (await heicToJpg(heicAsBase64, jpgQuality)) as string;
     window.FileMaker.PerformScriptWithOption(fmScript, res, scriptOption);
   } catch (error) {
     console.error(error);
