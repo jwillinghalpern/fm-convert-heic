@@ -1,29 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fm convert heic</title>
-    <style>
-      * {
-        font-family: sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <script type="module">
-      import './index.ts';
-    </script>
-    <h1>HEIC To PNG</h1>
-    <h2>Call this function from FM:</h2>
-    <pre>
-convertHeicAndCallFM (
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>fm convert heic</title>
+  <style>
+    * {
+      font-family: sans-serif;
+    }
+
+    .function {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <script type="module">
+    import './index.ts';
+  </script>
+  <h1>HEIC To PNG or JPG</h1>
+  <h2>Call one of these functions from FM:</h2>
+  <pre>
+<span class="function">convertHeicToPng </span>(
   heicAsBase64: string,
   fmScript: string,
   scriptOption?: '0' | '1' | '2' | '3' | '4' | '5'
 )
-		</pre
-    >
-  </body>
+
+<span class="function">convertHeicToJpg</span> (
+  heicAsBase64: string,
+  fmScript: string,
+  scriptOption?: '0' | '1' | '2' | '3' | '4' | '5',
+  quality?: number (number between 0 and 1)
+)
+		</pre>
+</body>
+
 </html>
